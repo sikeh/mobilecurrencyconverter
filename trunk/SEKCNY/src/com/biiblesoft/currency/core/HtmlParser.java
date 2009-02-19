@@ -25,7 +25,6 @@ public class HtmlParser {
         return getRate(DEFAULT_URL);
     }
 
-   
     public String getRate(String url) throws IOException {
         httpConnection = (HttpConnection) Connector.open(url);
         inputStream = httpConnection.openInputStream();
@@ -49,6 +48,12 @@ public class HtmlParser {
                     // therefore get rid of &nbsp;
                     s = s.replace('&', ' ').replace('n', ' ').replace('b', ' ').replace('s', ' ').replace('p', ' ').replace(';', ' ').
                             replace('C', ' ').replace('N', ' ').replace('Y', ' ').trim();
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    if (httpConnection != null) {
+                        httpConnection.close();
+                    }
                     return s;
 
                     // set data moble (the bus)
