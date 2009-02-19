@@ -155,7 +155,12 @@ public class SEKCNY extends MIDlet implements CommandListener {
                 switchDisplayable(null, mainForm);//GEN-LINE:|7-commandAction|12|17-postAction
                 // write post-action user code here
             } else if (command == cancelCommand) {//GEN-LINE:|7-commandAction|13|39-preAction
-                // write pre-action user code here
+                try {
+                    // write pre-action user code here
+                    htmlParser.cancel();
+                } catch (IOException ex) {
+                    //ignore
+                }
                 switchDisplayable(null, mainForm);//GEN-LINE:|7-commandAction|14|39-postAction
                 // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|15|7-postCommandAction
@@ -458,12 +463,13 @@ public class SEKCNY extends MIDlet implements CommandListener {
     }
 
     //**********************************************
-    private HtmlParser htmlParser = new HtmlParser();
+    private HtmlParser htmlParser;
 
-    private void updateRate() throws IOException {
-        StringItem rateStringItem_local = (StringItem) mainForm.get(0);
-        rateStringItem_local.setFont(bigBoldFont);
-        rateStringItem_local.setText("1 SEK = " + htmlParser.getRate() + " CNY");
+    private void updateRate() throws IOException {     
+        htmlParser = new HtmlParser();
+        StringItem sekcnyRateStringItem_local = (StringItem) mainForm.get(0);
+        sekcnyRateStringItem_local.setFont(bigBoldFont);
+        sekcnyRateStringItem_local.setText("1 SEK = " + htmlParser.getRate() + " CNY");
         Date date = new Date();
         ((StringItem) mainForm.get(1)).setText(date.toString());
     }
