@@ -8,26 +8,22 @@ import java.io.InputStream;
 /**
  * Html parser to be exetued as a Thread, which reads bus destionation and minute left.
  *
- * @author Sike Huang
  * @author Shanbo Li
+ * @author Sike Huang
  */
-public class HtmlParser {
+public class ConvertHelper {
 
-    private final static String startLine = "&nbsp;1&nbsp;SEK&nbsp;=<span class=bld>&nbsp;";
     private HttpConnection httpConnection;
     private InputStream inputStream;
-    private String DEFAULT_URL = "http://www.google.com/finance?q=SEKCNY";
+    private String DEFAULT_SKELETON = "http://www.google.com/finance/converter?a=";
 
-    public HtmlParser() {
-    }
-
-    public String getRate() throws IOException {
-        return getRate(DEFAULT_URL);
-    }
-
-    public String getRate(String url) throws IOException {
+    public String convert(String number, String from, String to) throws IOException {
         String result = "unknow~";
+        if (from.equals(to))return number;
+
+        String endLine = to + "</span>";
         try {
+            String url = DEFAULT_SKELETON + number + "&from=" + from + "&to=" + to;
             httpConnection = (HttpConnection) Connector.open(url);
             inputStream = httpConnection.openInputStream();
             StringBuffer buffer = new StringBuffer();
@@ -40,21 +36,19 @@ public class HtmlParser {
                     // read line by line
                     String line = new String(buffer.toString());
 
-                    if (line.trim().startsWith(startLine)) {
-                        // extract minute
-                        int start = line.indexOf(">");
-                        char c = '<';
-                        int end = line.lastIndexOf(c);
-                        String s = line.substring(start + 1, end);
-                        // minute could be 2&nbsp; or &nbsp;&nbsp;
-                        // therefore get rid of &nbsp;
-                        s = s.replace('&', ' ').replace('n', ' ').replace('b', ' ').replace('s', ' ').replace('p', ' ').replace(';', ' ').
-                                replace('C', ' ').replace('N', ' ').replace('Y', ' ').trim();
+                    if (line.trim().endsWith(endLine)) {
 
-                        result = s;
+
+                        // extract result
+                    
+                        String bldStart = "<span class=bld>";
+                        String bldEnd = "&nbsp;" + to + "</span>";
+                        String resultNumber = line.substring((line.indexOf(bldStart) + bldStart.length()), (line.indexOf(bldEnd)));
+
+                        result = number + " " + from + " = " + resultNumber + " " + to;
                         break;
 
-                        // set data moble (the bus)
+                    // set data moble (the bus)
                     }
                     buffer = new StringBuffer();
                 }
