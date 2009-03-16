@@ -96,7 +96,7 @@
                 </Component>
                 <Component componentID="55" typeID="Cjavax.microedition.lcdui.Form">
                     <Property name="instanceName" typeID="Pjava.lang.String" value="VconvertForm"/>
-                    <Property name="commands" typeID="1C#CommandEventSource" value="A1:3_R66"/>
+                    <Property name="commands" typeID="1C#CommandEventSource" value="A2:3_R663_R91"/>
                     <Property name="title" typeID="Pjava.lang.String" value="VCurrency Converter"/>
                     <Property name="commandListener" typeID="C#CommandListener" value="R7"/>
                     <Property name="items" typeID="1Cjavax.microedition.lcdui.Item" value="A4:3_R603_R613_R623_R83"/>
@@ -108,6 +108,11 @@
                             <Property name="eventSource" typeID="C#EventSource" value="R66"/>
                             <Property name="displayable" typeID="Cjavax.microedition.lcdui.Displayable" value="R14"/>
                         </Component>
+                    </Component>
+                    <Component componentID="83" typeID="Cjavax.microedition.lcdui.StringItem">
+                        <Property name="instanceName" typeID="Pjava.lang.String" value="VconvertForm_resultStringItem"/>
+                        <Property name="label" typeID="Pjava.lang.String" value="V"/>
+                        <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R8"/>
                     </Component>
                     <Component componentID="62" typeID="Cjavax.microedition.lcdui.ChoiceGroup">
                         <Property name="instanceName" typeID="Pjava.lang.String" value="VconvertForm_intoChoiceGroup"/>
@@ -132,10 +137,14 @@
                         <Property name="maxSize" typeID="Pint" value="V32"/>
                         <Property name="constraints" typeID="Pint" value="V2"/>
                     </Component>
-                    <Component componentID="83" typeID="Cjavax.microedition.lcdui.StringItem">
-                        <Property name="instanceName" typeID="Pjava.lang.String" value="VconvertForm_resultStringItem"/>
-                        <Property name="label" typeID="Pjava.lang.String" value="V"/>
-                        <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R8"/>
+                    <Component componentID="91" typeID="C#CommandEventSource">
+                        <Property name="eventHandler" typeID="C#EventHandler" value="R92"/>
+                        <Property name="displayable" typeID="Cjavax.microedition.lcdui.Displayable" value="R55"/>
+                        <Property name="command" typeID="Cjavax.microedition.lcdui.Command" value="R90"/>
+                        <Component componentID="92" typeID="C#ExitMidletEventHandler">
+                            <Property name="eventSource" typeID="C#EventSource" value="R91"/>
+                            <Property name="mobileDevice" typeID="C#MobileDevice" value="R2"/>
+                        </Component>
                     </Component>
                 </Component>
             </Component>
@@ -172,6 +181,11 @@
                     <Property name="label" typeID="Pjava.lang.String" value="VCancel"/>
                     <Property name="type" typeID="Pint" value="V3"/>
                 </Component>
+                <Component componentID="90" typeID="Cjavax.microedition.lcdui.Command">
+                    <Property name="instanceName" typeID="Pjava.lang.String" value="VconvertForm_exitCommand"/>
+                    <Property name="label" typeID="Pjava.lang.String" value="VExit"/>
+                    <Property name="type" typeID="Pint" value="V7"/>
+                </Component>
             </Component>
             <Component componentID="12" typeID="C#ResourcesCategory">
                 <Component componentID="19" typeID="Corg.netbeans.microedition.util.SimpleCancellableTask">
@@ -192,14 +206,17 @@
                     <Property name="bold" typeID="Pint" value="V16"/>
                     <Property name="style" typeID="Pint" value="V1"/>
                 </Component>
+                <Component componentID="89" typeID="Corg.netbeans.microedition.util.SimpleCancellableTask">
+                    <Property name="instanceName" typeID="Pjava.lang.String" value="Vtask"/>
+                </Component>
             </Component>
             <Component componentID="13" typeID="C#DatabindingCategory"/>
         </Component>
     </Document>
     <FlowScene version="1">
+        <Node componentID="14" descriptorID="componentNode14" x="789" y="24"/>
         <Node componentID="24" descriptorID="componentNode24" x="419" y="82"/>
         <Node componentID="55" descriptorID="componentNode55" x="165" y="247"/>
         <Node componentID="2" descriptorID="componentNode2" x="50" y="50"/>
-        <Node componentID="14" descriptorID="componentNode14" x="789" y="24"/>
     </FlowScene>
 </VisualDesign>

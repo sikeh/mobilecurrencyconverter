@@ -56,10 +56,13 @@ public class ConvertHelper {
         } finally {
             if (inputStream != null) {
                 inputStream.close();
+                inputStream = null;
             }
             if (httpConnection != null) {
                 httpConnection.close();
+                httpConnection = null;
             }
+            System.gc();
         }
         return result;
     }
@@ -70,9 +73,12 @@ public class ConvertHelper {
     public void cancel() throws IOException {
         if (inputStream != null) {
             inputStream.close();
+            inputStream = null;
         }
         if (httpConnection != null) {
             httpConnection.close();
+            httpConnection = null;
         }
+        System.gc();
     }
 }

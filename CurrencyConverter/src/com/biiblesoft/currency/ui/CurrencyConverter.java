@@ -18,24 +18,25 @@ import org.netbeans.microedition.util.SimpleCancellableTask;
 public class CurrencyConverter extends MIDlet implements CommandListener {
 
     private boolean midletPaused = false;
-
     //<editor-fold defaultstate="collapsed" desc=" Generated Fields ">//GEN-BEGIN:|fields|0|
     private WaitScreen convert_waitScreen;
     private Form errorForm;
     private StringItem reasonStringItem;
     private Form convertForm;
+    private StringItem convertForm_resultStringItem;
     private ChoiceGroup convertForm_intoChoiceGroup;
     private ChoiceGroup convertForm_fromChoiceGroup;
     private TextField convertForm_convertTextField;
-    private StringItem convertForm_resultStringItem;
     private Command convertForm_convertCommand;
     private Command errorForm_retryCommand;
     private Command errorForm_exitCommand;
     private Command cancelCommand;
+    private Command convertForm_exitCommand;
     private SimpleCancellableTask doConvertTask;
     private Ticker waitScreen_ticker;
     private Image google_finance_logo_image;
     private Font bigBoldFont;
+    private SimpleCancellableTask task;
     //</editor-fold>//GEN-END:|fields|0|
 
     /**
@@ -46,7 +47,6 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Methods ">//GEN-BEGIN:|methods|0|
     //</editor-fold>//GEN-END:|methods|0|
-
     //<editor-fold defaultstate="collapsed" desc=" Generated Method: initialize ">//GEN-BEGIN:|0-initialize|0|0-preInitialize
     /**
      * Initilizes the application.
@@ -70,7 +70,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         convertForm_intoChoiceGroup = new ChoiceGroup("into", Choice.POPUP);
         convertForm_fromChoiceGroup = new ChoiceGroup("from", Choice.POPUP);
         convertForm_convertTextField = new TextField("convert", "1", 32, TextField.NUMERIC);//GEN-END:|0-initialize|1|0-postInitialize
-    // write post-initialize user code here
+        // write post-initialize user code here
 
     }//GEN-BEGIN:|0-initialize|2|
     //</editor-fold>//GEN-END:|0-initialize|2|
@@ -82,7 +82,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
     public void startMIDlet() {//GEN-END:|3-startMIDlet|0|3-preAction
         // write pre-action user code here
         switchDisplayable(null, getConvertForm());//GEN-LINE:|3-startMIDlet|1|3-postAction
-    // write post-action user code here
+        // write post-action user code here
     }//GEN-BEGIN:|3-startMIDlet|2|
     //</editor-fold>//GEN-END:|3-startMIDlet|2|
 
@@ -111,7 +111,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         } else {
             display.setCurrent(alert, nextDisplayable);
         }//GEN-END:|5-switchDisplayable|1|5-postSwitch
-    // write post-switch user code here
+        // write post-switch user code here
     }//GEN-BEGIN:|5-switchDisplayable|2|
     //</editor-fold>//GEN-END:|5-switchDisplayable|2|
 
@@ -127,41 +127,45 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
             if (command == convertForm_convertCommand) {//GEN-END:|7-commandAction|1|66-preAction
                 // write pre-action user code here
                 switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|2|66-postAction
-            // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|3|18-preAction
-        } else if (displayable == convert_waitScreen) {
-            if (command == WaitScreen.FAILURE_COMMAND) {//GEN-END:|7-commandAction|3|18-preAction
-                // write pre-action user code here
-                switchDisplayable(null, errorForm);//GEN-LINE:|7-commandAction|4|18-postAction
-            // write post-action user code here
-            } else if (command == WaitScreen.SUCCESS_COMMAND) {//GEN-LINE:|7-commandAction|5|17-preAction
-                // write pre-action user code here
-                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|6|17-postAction
                 // write post-action user code here
-            } else if (command == cancelCommand) {//GEN-LINE:|7-commandAction|7|39-preAction
+            } else if (command == convertForm_exitCommand) {//GEN-LINE:|7-commandAction|3|91-preAction
+                // write pre-action user code here
+                exitMIDlet();//GEN-LINE:|7-commandAction|4|91-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|5|18-preAction
+        } else if (displayable == convert_waitScreen) {
+            if (command == WaitScreen.FAILURE_COMMAND) {//GEN-END:|7-commandAction|5|18-preAction
+                // write pre-action user code here
+                switchDisplayable(null, errorForm);//GEN-LINE:|7-commandAction|6|18-postAction
+                // write post-action user code here
+            } else if (command == WaitScreen.SUCCESS_COMMAND) {//GEN-LINE:|7-commandAction|7|17-preAction
+                // write pre-action user code here
+                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|8|17-postAction
+                // write post-action user code here
+            } else if (command == cancelCommand) {//GEN-LINE:|7-commandAction|9|39-preAction
                 try {
                     // write pre-action user code here
                     convert.cancel();
                 } catch (IOException ex) {
                     //ignore
                 }
-                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|8|39-postAction
-            // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|9|33-preAction
+                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|10|39-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|11|33-preAction
         } else if (displayable == errorForm) {
-            if (command == errorForm_exitCommand) {//GEN-END:|7-commandAction|9|33-preAction
+            if (command == errorForm_exitCommand) {//GEN-END:|7-commandAction|11|33-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|10|33-postAction
-            // write post-action user code here
-            } else if (command == errorForm_retryCommand) {//GEN-LINE:|7-commandAction|11|36-preAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|12|33-postAction
+                // write post-action user code here
+            } else if (command == errorForm_retryCommand) {//GEN-LINE:|7-commandAction|13|36-preAction
                 // write pre-action user code here
-                switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|12|36-postAction
-            // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|13|7-postCommandAction
-        }//GEN-END:|7-commandAction|13|7-postCommandAction
-    // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|14|
-    //</editor-fold>//GEN-END:|7-commandAction|14|
+                switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|14|36-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|15|7-postCommandAction
+        }//GEN-END:|7-commandAction|15|7-postCommandAction
+        // write post-action user code here
+    }//GEN-BEGIN:|7-commandAction|16|
+    //</editor-fold>//GEN-END:|7-commandAction|16|
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: errorForm_exitCommand ">//GEN-BEGIN:|32-getter|0|32-preInit
     /**
@@ -172,7 +176,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (errorForm_exitCommand == null) {//GEN-END:|32-getter|0|32-preInit
             // write pre-init user code here
             errorForm_exitCommand = new Command("Exit", Command.EXIT, 0);//GEN-LINE:|32-getter|1|32-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|32-getter|2|
         return errorForm_exitCommand;
     }
@@ -187,7 +191,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (errorForm_retryCommand == null) {//GEN-END:|35-getter|0|35-preInit
             // write pre-init user code here
             errorForm_retryCommand = new Command("Retry", Command.OK, 0);//GEN-LINE:|35-getter|1|35-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|35-getter|2|
         return errorForm_retryCommand;
     }
@@ -202,7 +206,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (cancelCommand == null) {//GEN-END:|38-getter|0|38-preInit
             // write pre-init user code here
             cancelCommand = new Command("Cancel", Command.CANCEL, 0);//GEN-LINE:|38-getter|1|38-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|38-getter|2|
         return cancelCommand;
     }
@@ -228,7 +232,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
                     }
                 }//GEN-BEGIN:|19-getter|2|19-postInit
             });//GEN-END:|19-getter|2|19-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|19-getter|3|
         return doConvertTask;
     }
@@ -243,7 +247,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (bigBoldFont == null) {//GEN-END:|41-getter|0|41-preInit
             // write pre-init user code here
             bigBoldFont = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE);//GEN-LINE:|41-getter|1|41-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|41-getter|2|
         return bigBoldFont;
     }
@@ -258,7 +262,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (waitScreen_ticker == null) {//GEN-END:|42-getter|0|42-preInit
             // write pre-init user code here
             waitScreen_ticker = new Ticker("Retrieving data from Google Finance...");//GEN-LINE:|42-getter|1|42-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|42-getter|2|
         return waitScreen_ticker;
     }
@@ -277,7 +281,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
             } catch (java.io.IOException e) {//GEN-END:|43-getter|1|43-@java.io.IOException
                 e.printStackTrace();
             }//GEN-LINE:|43-getter|2|43-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|43-getter|3|
         return google_finance_logo_image;
     }
@@ -292,7 +296,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (reasonStringItem == null) {//GEN-END:|54-getter|0|54-preInit
             // write pre-init user code here
             reasonStringItem = new StringItem("Reason:", null);//GEN-LINE:|54-getter|1|54-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|54-getter|2|
         return reasonStringItem;
     }
@@ -308,6 +312,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
             // write pre-init user code here
             convertForm = new Form("Currency Converter", new Item[] { convertForm_convertTextField, convertForm_fromChoiceGroup, convertForm_intoChoiceGroup, getConvertForm_resultStringItem() });//GEN-BEGIN:|55-getter|1|55-postInit
             convertForm.addCommand(getConvertForm_convertCommand());
+            convertForm.addCommand(getConvertForm_exitCommand());
             convertForm.setCommandListener(this);//GEN-END:|55-getter|1|55-postInit
             // write post-init user code here
             initial();
@@ -325,7 +330,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         if (convertForm_convertCommand == null) {//GEN-END:|65-getter|0|65-preInit
             // write pre-init user code here
             convertForm_convertCommand = new Command("Convert", Command.OK, 0);//GEN-LINE:|65-getter|1|65-postInit
-        // write post-init user code here
+            // write post-init user code here
         }//GEN-BEGIN:|65-getter|2|
         return convertForm_convertCommand;
     }
@@ -345,6 +350,41 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         return convertForm_resultStringItem;
     }
     //</editor-fold>//GEN-END:|83-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: task ">//GEN-BEGIN:|89-getter|0|89-preInit
+    /**
+     * Returns an initiliazed instance of task component.
+     * @return the initialized component instance
+     */
+    public SimpleCancellableTask getTask() {
+        if (task == null) {//GEN-END:|89-getter|0|89-preInit
+            // write pre-init user code here
+            task = new SimpleCancellableTask();//GEN-BEGIN:|89-getter|1|89-execute
+            task.setExecutable(new org.netbeans.microedition.util.Executable() {
+                public void execute() throws Exception {//GEN-END:|89-getter|1|89-execute
+                    // write task-execution user code here
+                }//GEN-BEGIN:|89-getter|2|89-postInit
+            });//GEN-END:|89-getter|2|89-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|89-getter|3|
+        return task;
+    }
+    //</editor-fold>//GEN-END:|89-getter|3|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: convertForm_exitCommand ">//GEN-BEGIN:|90-getter|0|90-preInit
+    /**
+     * Returns an initiliazed instance of convertForm_exitCommand component.
+     * @return the initialized component instance
+     */
+    public Command getConvertForm_exitCommand() {
+        if (convertForm_exitCommand == null) {//GEN-END:|90-getter|0|90-preInit
+            // write pre-init user code here
+            convertForm_exitCommand = new Command("Exit", Command.EXIT, 0);//GEN-LINE:|90-getter|1|90-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|90-getter|2|
+        return convertForm_exitCommand;
+    }
+    //</editor-fold>//GEN-END:|90-getter|2|
 
     /**
      * Returns a display instance.
@@ -390,7 +430,6 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
      */
     public void destroyApp(boolean unconditional) {
     }
-
     //**********************************************
     private ConvertHelper convert;
     private RecordStoreManager rsm = new RecordStoreManager();
@@ -398,139 +437,140 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
     private void initial() {
         // f = convertForm_fromChoiceGroup_local
         ChoiceGroup f = (ChoiceGroup) convertForm.get(1);
-        f.append("AED", null);
-        f.append("ANG", null);
-        f.append("ARS", null);
-        f.append("AUD", null);
-        f.append("BGN", null);
-        f.append("BHD", null);
-        f.append("BND", null);
-        f.append("BOB", null);
-        f.append("BRL", null);
-        f.append("BWP", null);
-        f.append("CAD", null);
-        f.append("CHF", null);
-        f.append("CLP", null);
-        f.append("CNY", null);
-        f.append("COP", null);
-        f.append("CSD", null);
-        f.append("CZK", null);
-        f.append("DKK", null);
-        f.append("EEK", null);
-        f.append("EGP", null);
-        f.append("EUR", null);
-        f.append("FJD", null);
-        f.append("GBP", null);
-        f.append("HKD", null);
-        f.append("HNL", null);
-        f.append("HRK", null);
-        f.append("HUF", null);
-        f.append("IDR", null);
-        f.append("ILS", null);
-        f.append("INR", null);
-        f.append("ISK", null);
-        f.append("JPY", null);
-        f.append("KRW", null);
-        f.append("KWD", null);
-        f.append("KZT", null);
-        f.append("LKR", null);
-        f.append("LTL", null);
-        f.append("MAD", null);
-        f.append("MUR", null);
-        f.append("MXN", null);
-        f.append("MYR", null);
-        f.append("NOK", null);
-        f.append("NPR", null);
-        f.append("NZD", null);
-        f.append("OMR", null);
-        f.append("PEN", null);
-        f.append("PHP", null);
-        f.append("PKR", null);
-        f.append("PLN", null);
-        f.append("QAR", null);
-        f.append("RON", null);
-        f.append("RUB", null);
-        f.append("SAR", null);
-        f.append("SEK", null);
-        f.append("SGD", null);
-        f.append("SIT", null);
-        f.append("SKK", null);
-        f.append("THB", null);
-        f.append("TRY", null);
-        f.append("TTD", null);
-        f.append("TWD", null);
-        f.append("UAH", null);
-        f.append("USD", null);
-        f.append("VEB", null);
-        f.append("ZAR", null);
+        f.append("AED (United Arab Emirates Dirham)", null);
+        f.append("ANG (Netherlands Antillean Gulden)", null);
+        f.append("ARS (Argentine Peso)", null);
+        f.append("AUD (Australian Dollar)", null);
+        f.append("BGN (Bulgarian Lev)", null);
+        f.append("BHD (Bahraini Dinar)", null);
+        f.append("BND (Brunei Dollar)", null);
+        f.append("BOB (Bolivian Boliviano)", null);
+        f.append("BRL (Brazilian Real)", null);
+        f.append("BWP (Botswana Pula)", null);
+        f.append("CAD (Canadian Dollar)", null);
+        f.append("CHF (Swiss Franc)", null);
+        f.append("CLP (Chilean Peso)", null);
+        f.append("CNY (Chinese Yuan)", null);
+        f.append("COP (Colombian Peso)", null);
+        f.append("CSD (Serbian Dinar)", null);
+        f.append("CZK (Czech Koruna)", null);
+        f.append("DKK (Danish Krone)", null);
+        f.append("EEK (Estonian Kroon)", null);
+        f.append("EGP (Egyptian Pound)", null);
+        f.append("EUR (Euro)", null);
+        f.append("FJD (Fijian Dollar)", null);
+        f.append("GBP (British Pound)", null);
+        f.append("HKD (Hong Kong Dollar)", null);
+        f.append("HNL (Honduran Lempira)", null);
+        f.append("HRK (Croatian Kuna)", null);
+        f.append("HUF (Hungarian Forint)", null);
+        f.append("IDR (Indonesian Rupiah)", null);
+        f.append("ILS (New Israeli Sheqel)", null);
+        f.append("INR (Indian Rupee)", null);
+        f.append("ISK (Icelandic Króna)", null);
+        f.append("JPY (Japanese Yen)", null);
+        f.append("KRW (South Korean Won)", null);
+        f.append("KWD (Kuwaiti Dinar)", null);
+        f.append("KZT (Kazakhstani Tenge)", null);
+        f.append("LKR (Sri Lankan Rupee)", null);
+        f.append("LTL (Lithuanian Litas)", null);
+        f.append("MAD (Moroccan Dirham)", null);
+        f.append("MUR (Mauritian Rupee)", null);
+        f.append("MXN (Mexican Peso)", null);
+        f.append("MYR (Malaysian Ringgit)", null);
+        f.append("NOK (Norwegian Krone)", null);
+        f.append("NPR (Nepalese Rupee)", null);
+        f.append("NZD (New Zealand Dollar)", null);
+        f.append("OMR (Omani Rial)", null);
+        f.append("PEN (Peruvian Nuevo Sol)", null);
+        f.append("PHP (Philippine Peso)", null);
+        f.append("PKR (Pakistani Rupee)", null);
+        f.append("PLN (Polish Złoty)", null);
+        f.append("QAR (Qatari Riyal)", null);
+        f.append("RON (New Romanian Leu)", null);
+        f.append("RUB (Russian Ruble)", null);
+        f.append("SAR (Saudi Riyal)", null);
+        f.append("SEK (Swedish Krona)", null);
+        f.append("SGD (Singapore Dollar)", null);
+        f.append("SIT (Slovenian Tolar)", null);
+        f.append("SKK (Slovak Koruna)", null);
+        f.append("THB (Thai Baht)", null);
+        f.append("TRY (New Turkish Lira)", null);
+        f.append("TTD (Trinidad and Tobago Dollar)", null);
+        f.append("TWD (New Taiwan Dollar)", null);
+        f.append("UAH (Ukrainian Hryvnia)", null);
+        f.append("USD (United States Dollar)", null);
+        f.append("VEB (Venezuelan Bolívar)", null);
+        f.append("ZAR (South African Rand)", null);
+
 
         // t = convertForm_toChoiceGroup_local
         ChoiceGroup t = (ChoiceGroup) convertForm.get(2);
-        t.append("AED", null);
-        t.append("ANG", null);
-        t.append("ARS", null);
-        t.append("AUD", null);
-        t.append("BGN", null);
-        t.append("BHD", null);
-        t.append("BND", null);
-        t.append("BOB", null);
-        t.append("BRL", null);
-        t.append("BWP", null);
-        t.append("CAD", null);
-        t.append("CHF", null);
-        t.append("CLP", null);
-        t.append("CNY", null);
-        t.append("COP", null);
-        t.append("CSD", null);
-        t.append("CZK", null);
-        t.append("DKK", null);
-        t.append("EEK", null);
-        t.append("EGP", null);
-        t.append("EUR", null);
-        t.append("FJD", null);
-        t.append("GBP", null);
-        t.append("HKD", null);
-        t.append("HNL", null);
-        t.append("HRK", null);
-        t.append("HUF", null);
-        t.append("IDR", null);
-        t.append("ILS", null);
-        t.append("INR", null);
-        t.append("ISK", null);
-        t.append("JPY", null);
-        t.append("KRW", null);
-        t.append("KWD", null);
-        t.append("KZT", null);
-        t.append("LKR", null);
-        t.append("LTL", null);
-        t.append("MAD", null);
-        t.append("MUR", null);
-        t.append("MXN", null);
-        t.append("MYR", null);
-        t.append("NOK", null);
-        t.append("NPR", null);
-        t.append("NZD", null);
-        t.append("OMR", null);
-        t.append("PEN", null);
-        t.append("PHP", null);
-        t.append("PKR", null);
-        t.append("PLN", null);
-        t.append("QAR", null);
-        t.append("RON", null);
-        t.append("RUB", null);
-        t.append("SAR", null);
-        t.append("SEK", null);
-        t.append("SGD", null);
-        t.append("SIT", null);
-        t.append("SKK", null);
-        t.append("THB", null);
-        t.append("TRY", null);
-        t.append("TTD", null);
-        t.append("TWD", null);
-        t.append("UAH", null);
-        t.append("USD", null);
-        t.append("VEB", null);
-        t.append("ZAR", null);
+        t.append("AED (United Arab Emirates Dirham)", null);
+        t.append("ANG (Netherlands Antillean Gulden)", null);
+        t.append("ARS (Argentine Peso)", null);
+        t.append("AUD (Australian Dollar)", null);
+        t.append("BGN (Bulgarian Lev)", null);
+        t.append("BHD (Bahraini Dinar)", null);
+        t.append("BND (Brunei Dollar)", null);
+        t.append("BOB (Bolivian Boliviano)", null);
+        t.append("BRL (Brazilian Real)", null);
+        t.append("BWP (Botswana Pula)", null);
+        t.append("CAD (Canadian Dollar)", null);
+        t.append("CHF (Swiss Franc)", null);
+        t.append("CLP (Chilean Peso)", null);
+        t.append("CNY (Chinese Yuan)", null);
+        t.append("COP (Colombian Peso)", null);
+        t.append("CSD (Serbian Dinar)", null);
+        t.append("CZK (Czech Koruna)", null);
+        t.append("DKK (Danish Krone)", null);
+        t.append("EEK (Estonian Kroon)", null);
+        t.append("EGP (Egyptian Pound)", null);
+        t.append("EUR (Euro)", null);
+        t.append("FJD (Fijian Dollar)", null);
+        t.append("GBP (British Pound)", null);
+        t.append("HKD (Hong Kong Dollar)", null);
+        t.append("HNL (Honduran Lempira)", null);
+        t.append("HRK (Croatian Kuna)", null);
+        t.append("HUF (Hungarian Forint)", null);
+        t.append("IDR (Indonesian Rupiah)", null);
+        t.append("ILS (New Israeli Sheqel)", null);
+        t.append("INR (Indian Rupee)", null);
+        t.append("ISK (Icelandic Króna)", null);
+        t.append("JPY (Japanese Yen)", null);
+        t.append("KRW (South Korean Won)", null);
+        t.append("KWD (Kuwaiti Dinar)", null);
+        t.append("KZT (Kazakhstani Tenge)", null);
+        t.append("LKR (Sri Lankan Rupee)", null);
+        t.append("LTL (Lithuanian Litas)", null);
+        t.append("MAD (Moroccan Dirham)", null);
+        t.append("MUR (Mauritian Rupee)", null);
+        t.append("MXN (Mexican Peso)", null);
+        t.append("MYR (Malaysian Ringgit)", null);
+        t.append("NOK (Norwegian Krone)", null);
+        t.append("NPR (Nepalese Rupee)", null);
+        t.append("NZD (New Zealand Dollar)", null);
+        t.append("OMR (Omani Rial)", null);
+        t.append("PEN (Peruvian Nuevo Sol)", null);
+        t.append("PHP (Philippine Peso)", null);
+        t.append("PKR (Pakistani Rupee)", null);
+        t.append("PLN (Polish Złoty)", null);
+        t.append("QAR (Qatari Riyal)", null);
+        t.append("RON (New Romanian Leu)", null);
+        t.append("RUB (Russian Ruble)", null);
+        t.append("SAR (Saudi Riyal)", null);
+        t.append("SEK (Swedish Krona)", null);
+        t.append("SGD (Singapore Dollar)", null);
+        t.append("SIT (Slovenian Tolar)", null);
+        t.append("SKK (Slovak Koruna)", null);
+        t.append("THB (Thai Baht)", null);
+        t.append("TRY (New Turkish Lira)", null);
+        t.append("TTD (Trinidad and Tobago Dollar)", null);
+        t.append("TWD (New Taiwan Dollar)", null);
+        t.append("UAH (Ukrainian Hryvnia)", null);
+        t.append("USD (United States Dollar)", null);
+        t.append("VEB (Venezuelan Bolívar)", null);
+        t.append("ZAR (South African Rand)", null);
 
 
         String from = rsm.readFrom();
@@ -572,6 +612,6 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         String to = convertForm_toChoiceGroup_local.getString(convertForm_toChoiceGroup_local.getSelectedIndex());
         rsm.writeFrom(from);
         rsm.writeTo(to);
-        convertForm_resultStringItem_local.setText(convert.convert(number, from, to));
+        convertForm_resultStringItem_local.setText(convert.convert(number, from.substring(0, 3), to.substring(0, 3)));
     }
 }
