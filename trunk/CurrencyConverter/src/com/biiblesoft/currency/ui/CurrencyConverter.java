@@ -23,20 +23,25 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
     private Form errorForm;
     private StringItem reasonStringItem;
     private Form convertForm;
-    private StringItem convertForm_resultStringItem;
     private ChoiceGroup convertForm_intoChoiceGroup;
     private ChoiceGroup convertForm_fromChoiceGroup;
     private TextField convertForm_convertTextField;
-    private Command convertForm_convertCommand;
+    private StringItem convertForm_resultStringItem;
+    private Form aboutForm;
+    private StringItem aboutForm_nameStringItem;
+    private StringItem aboutForm_homepageStringItem;
+    private StringItem aboutForm_licenseStringItem;
     private Command errorForm_retryCommand;
     private Command errorForm_exitCommand;
     private Command cancelCommand;
+    private Command convertForm_convertCommand;
     private Command convertForm_exitCommand;
+    private Command convertForm_aboutCommand;
+    private Command aboutForm_okCommand;
     private SimpleCancellableTask doConvertTask;
     private Ticker waitScreen_ticker;
     private Image google_finance_logo_image;
     private Font bigBoldFont;
-    private SimpleCancellableTask task;
     //</editor-fold>//GEN-END:|fields|0|
 
     /**
@@ -123,49 +128,59 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
      */
     public void commandAction(Command command, Displayable displayable) {//GEN-END:|7-commandAction|0|7-preCommandAction
         // write pre-action user code here
-        if (displayable == convertForm) {//GEN-BEGIN:|7-commandAction|1|66-preAction
-            if (command == convertForm_convertCommand) {//GEN-END:|7-commandAction|1|66-preAction
+        if (displayable == aboutForm) {//GEN-BEGIN:|7-commandAction|1|104-preAction
+            if (command == aboutForm_okCommand) {//GEN-END:|7-commandAction|1|104-preAction
                 // write pre-action user code here
-                switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|2|66-postAction
+                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|2|104-postAction
                 // write post-action user code here
-            } else if (command == convertForm_exitCommand) {//GEN-LINE:|7-commandAction|3|91-preAction
+            }//GEN-BEGIN:|7-commandAction|3|96-preAction
+        } else if (displayable == convertForm) {
+            if (command == convertForm_aboutCommand) {//GEN-END:|7-commandAction|3|96-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|4|91-postAction
+                switchDisplayable(null, getAboutForm());//GEN-LINE:|7-commandAction|4|96-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|5|18-preAction
+            } else if (command == convertForm_convertCommand) {//GEN-LINE:|7-commandAction|5|66-preAction
+                // write pre-action user code here
+                switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|6|66-postAction
+                // write post-action user code here
+            } else if (command == convertForm_exitCommand) {//GEN-LINE:|7-commandAction|7|91-preAction
+                // write pre-action user code here
+                exitMIDlet();//GEN-LINE:|7-commandAction|8|91-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|9|18-preAction
         } else if (displayable == convert_waitScreen) {
-            if (command == WaitScreen.FAILURE_COMMAND) {//GEN-END:|7-commandAction|5|18-preAction
+            if (command == WaitScreen.FAILURE_COMMAND) {//GEN-END:|7-commandAction|9|18-preAction
                 // write pre-action user code here
-                switchDisplayable(null, errorForm);//GEN-LINE:|7-commandAction|6|18-postAction
+                switchDisplayable(null, errorForm);//GEN-LINE:|7-commandAction|10|18-postAction
                 // write post-action user code here
-            } else if (command == WaitScreen.SUCCESS_COMMAND) {//GEN-LINE:|7-commandAction|7|17-preAction
+            } else if (command == WaitScreen.SUCCESS_COMMAND) {//GEN-LINE:|7-commandAction|11|17-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|8|17-postAction
+                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|12|17-postAction
                 // write post-action user code here
-            } else if (command == cancelCommand) {//GEN-LINE:|7-commandAction|9|39-preAction
+            } else if (command == cancelCommand) {//GEN-LINE:|7-commandAction|13|39-preAction
                 try {
                     // write pre-action user code here
                     convert.cancel();
                 } catch (IOException ex) {
                     //ignore
                 }
-                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|10|39-postAction
+                switchDisplayable(null, getConvertForm());//GEN-LINE:|7-commandAction|14|39-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|11|33-preAction
+            }//GEN-BEGIN:|7-commandAction|15|33-preAction
         } else if (displayable == errorForm) {
-            if (command == errorForm_exitCommand) {//GEN-END:|7-commandAction|11|33-preAction
+            if (command == errorForm_exitCommand) {//GEN-END:|7-commandAction|15|33-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|12|33-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|16|33-postAction
                 // write post-action user code here
-            } else if (command == errorForm_retryCommand) {//GEN-LINE:|7-commandAction|13|36-preAction
+            } else if (command == errorForm_retryCommand) {//GEN-LINE:|7-commandAction|17|36-preAction
                 // write pre-action user code here
-                switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|14|36-postAction
+                switchDisplayable(null, convert_waitScreen);//GEN-LINE:|7-commandAction|18|36-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|15|7-postCommandAction
-        }//GEN-END:|7-commandAction|15|7-postCommandAction
+            }//GEN-BEGIN:|7-commandAction|19|7-postCommandAction
+        }//GEN-END:|7-commandAction|19|7-postCommandAction
         // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|16|
-    //</editor-fold>//GEN-END:|7-commandAction|16|
+    }//GEN-BEGIN:|7-commandAction|20|
+    //</editor-fold>//GEN-END:|7-commandAction|20|
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: errorForm_exitCommand ">//GEN-BEGIN:|32-getter|0|32-preInit
     /**
@@ -313,6 +328,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
             convertForm = new Form("Currency Converter", new Item[] { convertForm_convertTextField, convertForm_fromChoiceGroup, convertForm_intoChoiceGroup, getConvertForm_resultStringItem() });//GEN-BEGIN:|55-getter|1|55-postInit
             convertForm.addCommand(getConvertForm_convertCommand());
             convertForm.addCommand(getConvertForm_exitCommand());
+            convertForm.addCommand(getConvertForm_aboutCommand());
             convertForm.setCommandListener(this);//GEN-END:|55-getter|1|55-postInit
             // write post-init user code here
             initial();
@@ -351,25 +367,7 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|83-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: task ">//GEN-BEGIN:|89-getter|0|89-preInit
-    /**
-     * Returns an initiliazed instance of task component.
-     * @return the initialized component instance
-     */
-    public SimpleCancellableTask getTask() {
-        if (task == null) {//GEN-END:|89-getter|0|89-preInit
-            // write pre-init user code here
-            task = new SimpleCancellableTask();//GEN-BEGIN:|89-getter|1|89-execute
-            task.setExecutable(new org.netbeans.microedition.util.Executable() {
-                public void execute() throws Exception {//GEN-END:|89-getter|1|89-execute
-                    // write task-execution user code here
-                }//GEN-BEGIN:|89-getter|2|89-postInit
-            });//GEN-END:|89-getter|2|89-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|89-getter|3|
-        return task;
-    }
-    //</editor-fold>//GEN-END:|89-getter|3|
+
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: convertForm_exitCommand ">//GEN-BEGIN:|90-getter|0|90-preInit
     /**
@@ -385,6 +383,105 @@ public class CurrencyConverter extends MIDlet implements CommandListener {
         return convertForm_exitCommand;
     }
     //</editor-fold>//GEN-END:|90-getter|2|
+
+
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: convertForm_aboutCommand ">//GEN-BEGIN:|95-getter|0|95-preInit
+    /**
+     * Returns an initiliazed instance of convertForm_aboutCommand component.
+     * @return the initialized component instance
+     */
+    public Command getConvertForm_aboutCommand() {
+        if (convertForm_aboutCommand == null) {//GEN-END:|95-getter|0|95-preInit
+            // write pre-init user code here
+            convertForm_aboutCommand = new Command("About", Command.HELP, 0);//GEN-LINE:|95-getter|1|95-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|95-getter|2|
+        return convertForm_aboutCommand;
+    }
+    //</editor-fold>//GEN-END:|95-getter|2|
+
+
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: aboutForm ">//GEN-BEGIN:|101-getter|0|101-preInit
+    /**
+     * Returns an initiliazed instance of aboutForm component.
+     * @return the initialized component instance
+     */
+    public Form getAboutForm() {
+        if (aboutForm == null) {//GEN-END:|101-getter|0|101-preInit
+            // write pre-init user code here
+            aboutForm = new Form("About", new Item[] { getAboutForm_nameStringItem(), getAboutForm_homepageStringItem(), getAboutForm_licenseStringItem() });//GEN-BEGIN:|101-getter|1|101-postInit
+            aboutForm.addCommand(getAboutForm_okCommand());
+            aboutForm.setCommandListener(this);//GEN-END:|101-getter|1|101-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|101-getter|2|
+        return aboutForm;
+    }
+    //</editor-fold>//GEN-END:|101-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: aboutForm_nameStringItem ">//GEN-BEGIN:|105-getter|0|105-preInit
+    /**
+     * Returns an initiliazed instance of aboutForm_nameStringItem component.
+     * @return the initialized component instance
+     */
+    public StringItem getAboutForm_nameStringItem() {
+        if (aboutForm_nameStringItem == null) {//GEN-END:|105-getter|0|105-preInit
+            // write pre-init user code here
+            aboutForm_nameStringItem = new StringItem("Currency Converter", "Version 1.03");//GEN-LINE:|105-getter|1|105-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|105-getter|2|
+        return aboutForm_nameStringItem;
+    }
+    //</editor-fold>//GEN-END:|105-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: aboutForm_homepageStringItem ">//GEN-BEGIN:|106-getter|0|106-preInit
+    /**
+     * Returns an initiliazed instance of aboutForm_homepageStringItem component.
+     * @return the initialized component instance
+     */
+    public StringItem getAboutForm_homepageStringItem() {
+        if (aboutForm_homepageStringItem == null) {//GEN-END:|106-getter|0|106-preInit
+            // write pre-init user code here
+            aboutForm_homepageStringItem = new StringItem("Homepage:", "http://code.google.com/p/mobilecurrencyconverter/");//GEN-LINE:|106-getter|1|106-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|106-getter|2|
+        return aboutForm_homepageStringItem;
+    }
+    //</editor-fold>//GEN-END:|106-getter|2|
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: aboutForm_licenseStringItem ">//GEN-BEGIN:|107-getter|0|107-preInit
+    /**
+     * Returns an initiliazed instance of aboutForm_licenseStringItem component.
+     * @return the initialized component instance
+     */
+    public StringItem getAboutForm_licenseStringItem() {
+        if (aboutForm_licenseStringItem == null) {//GEN-END:|107-getter|0|107-preInit
+            // write pre-init user code here
+            aboutForm_licenseStringItem = new StringItem("License:", "\nCopyright 2009 Shanbo & Sike \n\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0 \n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. ");//GEN-LINE:|107-getter|1|107-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|107-getter|2|
+        return aboutForm_licenseStringItem;
+    }
+    //</editor-fold>//GEN-END:|107-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: aboutForm_okCommand ">//GEN-BEGIN:|103-getter|0|103-preInit
+    /**
+     * Returns an initiliazed instance of aboutForm_okCommand component.
+     * @return the initialized component instance
+     */
+    public Command getAboutForm_okCommand() {
+        if (aboutForm_okCommand == null) {//GEN-END:|103-getter|0|103-preInit
+            // write pre-init user code here
+            aboutForm_okCommand = new Command("Ok", Command.OK, 0);//GEN-LINE:|103-getter|1|103-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|103-getter|2|
+        return aboutForm_okCommand;
+    }
+    //</editor-fold>//GEN-END:|103-getter|2|
 
     /**
      * Returns a display instance.
