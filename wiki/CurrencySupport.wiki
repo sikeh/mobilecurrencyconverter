@@ -3,13 +3,16 @@
 
 = Currency Support =
 
-United Arab Emirates Dirham (AED)
-Netherlands Antillean Gulden (ANG)
-Argentine Peso (ARS)
-Australian Dollar (AUD)
+United Arab Emirates Dirham (AED)<br/>
+Netherlands Antillean Gulden (ANG)<br/>
+Argentine Peso (ARS)<br/>
+Australian Dollar (AUD)<br/>
 Bulgarian Lev (BGN)
+
 Bahraini Dinar (BHD)
+
 Brunei Dollar (BND)
+
 Bolivian Boliviano (BOB)
 Brazilian Real (BRL)
 Botswana Pula (BWP)
