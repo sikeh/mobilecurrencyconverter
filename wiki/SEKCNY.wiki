@@ -1,4 +1,5 @@
 #summary about SEKCNY.
+#labels Featured
 
 = Introduction =
 
